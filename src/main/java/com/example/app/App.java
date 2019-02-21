@@ -43,7 +43,10 @@ public class App {
     System.in.read();
 
     binding.thenCompose(ServerBinding::unbind)
-        .thenAccept(unbound -> system.terminate());
+        .thenAccept(unbound -> {
+          system.terminate();
+          logger.info("Server stopped.");
+        });
   }
 
   public static Route appRoute() {
