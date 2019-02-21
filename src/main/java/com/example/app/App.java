@@ -16,20 +16,30 @@ import akka.stream.javadsl.Flow;
 
 import java.io.IOException;
 import java.util.concurrent.CompletionStage;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import static akka.http.javadsl.server.Directives.*;
 
 public class App {
+
+  private static final Logger logger = LoggerFactory.getLogger("Main");
+
   public static void main(String[] args) throws IOException {
+
+    final String BIND_ADDRESS = System.getenv("BIND_ADDRESS");
+    final int BIND_PORT = Integer.parseInt(System.getenv("BIND_PORT"));
+
     ActorSystem system = ActorSystem.create("routes");
 
     final Http http = Http.get(system);
     final ActorMaterializer materializer = ActorMaterializer.create(system);
 
     final Flow<HttpRequest, HttpResponse, NotUsed> routes = appRoute().flow(system, materializer);
-    final CompletionStage<ServerBinding> binding = http.bindAndHandle(routes, ConnectHttp.toHost("0.0.0.0", 8080), materializer);
+    final CompletionStage<ServerBinding> binding = http.bindAndHandle(routes, ConnectHttp.toHost(BIND_ADDRESS, BIND_PORT), materializer);
 
-    System.out.println("Server started...");
+    logger.info("Server started at {}:{}.\r\nPress any key to stop the server.", BIND_ADDRESS, BIND_PORT);
+
     System.in.read();
 
     binding.thenCompose(ServerBinding::unbind)
