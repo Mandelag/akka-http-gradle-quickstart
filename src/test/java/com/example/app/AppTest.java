@@ -6,7 +6,7 @@ package com.example.app;
 import akka.http.javadsl.model.HttpRequest;
 import akka.http.javadsl.testkit.JUnitRouteTest;
 import akka.http.javadsl.testkit.TestRoute;
-import org.junit.Assert;
+//import org.junit.Assert;
 import org.junit.Test;
 
 public class AppTest extends JUnitRouteTest {
