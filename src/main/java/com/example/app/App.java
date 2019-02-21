@@ -27,8 +27,8 @@ public class App {
 
   public static void main(String[] args) throws IOException {
 
-    final String BIND_ADDRESS = System.getenv("BIND_ADDRESS");
-    final int BIND_PORT = Integer.parseInt(System.getenv("BIND_PORT"));
+    final String BIND_ADDRESS = System.getenv("BIND_ADDRESS") != null ? System.getenv("BIND_ADDRESS") : "0.0.0.0";
+    final int BIND_PORT = System.getenv("BIND_PORT") != null ? Integer.parseInt(System.getenv("BIND_PORT")) : 8080;
 
     ActorSystem system = ActorSystem.create("routes");
 
