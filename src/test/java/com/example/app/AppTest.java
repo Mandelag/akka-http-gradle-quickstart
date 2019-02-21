@@ -12,7 +12,7 @@ import org.junit.Test;
 public class AppTest extends JUnitRouteTest {
 
   @Test
-  public void testhello() {
+  public void testHello() {
     TestRoute appRoute = testRoute(App.appRoute());
     appRoute.run(HttpRequest.GET("/"))
         .assertStatusCode(200)
