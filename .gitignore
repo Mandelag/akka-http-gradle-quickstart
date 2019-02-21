@@ -6,6 +6,7 @@ build/
 *.iml
 out/
 .gradle
+.env
 
 # Ignore Gradle GUI config
 gradle-app.setting

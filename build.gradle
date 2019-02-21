@@ -55,5 +55,21 @@ shadowJar {
     append('version.conf')
 }
 
+// https://stackoverflow.com/questions/22605947/how-do-set-environment-variable-in-gradle-via-task
+// https://stackoverflow.com/questions/50509084/gradle-environment-variables-load-from-file
+tasks.withType(JavaExec) {
+    file('.env').readLines().each() {
+        if (!it.isEmpty() && !it.startsWith("#")) {
+            def pos = it.indexOf("=")
+            def key = it.substring(0, pos)
+            def value = it.substring(pos + 1)
+
+            if (System.getenv(key) == null) {
+                environment key, value
+            }
+        }
+    }
+}
+
 // Define the main class for the application
 mainClassName = 'com.example.app.App'
